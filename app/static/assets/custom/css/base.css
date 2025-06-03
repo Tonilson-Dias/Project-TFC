@@ -1,0 +1,83 @@
+
+:root {
+    --tfc-blue: #4169E1;
+    --tfc-green: #36B37E;
+    --tfc-red: #FF5630;
+    --tfc-yellow: #FFAB00;
+    --tfc-purple: #6554C0;
+    --tfc-teal: #00B8D9;
+    --tfc-orange: #FF8B00;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+
+  .sidebar {
+    width: 260px;
+    z-index: 1030;
+  }
+  
+  .start-3 {
+    left: 12px;
+  }
+  
+  .hover-bg-light:hover {
+    background-color: #f0f0f0;
+  }
+  
+  
+  .content-wrapper {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+  }
+  
+  .ms-sidebar {
+    margin-left: 260px;
+  }
+  
+  .mt-navbar {
+    margin-top: 80px;
+  }
+  
+
+  .hover-shadow:hover {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+  }
+  
+  .transition {
+    transition: all 0.2s ease-in-out;
+  }
+  
+
+  @media (max-width: 992px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .sidebar.show {
+      transform: translateX(0);
+    }
+    
+    .content-wrapper {
+      margin-left: 0;
+      width: 100%;
+    }
+    
+    .ms-sidebar {
+      margin-left: 0;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .defense-item {
+      flex-direction: column;
+    }
+    
+    .card-body {
+      padding: 1rem;
+    }
+  }
