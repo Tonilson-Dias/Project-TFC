@@ -1,30 +1,382 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administrativo</title>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TFC </title>
+    <meta property="og:type" content="website" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Dashboard Admin</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="{{ url_for('logout') }}">Sair</a>
-            </div>
-        </div>
-    </nav>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <style>
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col">
-                <h2>Bem-vindo, {{ current_user.email }}</h2>
-                <p>Este é seu painel administrativo.</p>
-            </div>
+:root {
+    --tfc-blue: #4169E1;
+    --tfc-green: #36B37E;
+    --tfc-red: #FF5630;
+    --tfc-yellow: #FFAB00;
+    --tfc-purple: #6554C0;
+    --tfc-teal: #00B8D9;
+    --tfc-orange: #FF8B00;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+
+  .sidebar {
+    width: 260px;
+    z-index: 1030;
+  }
+  
+  .start-3 {
+    left: 12px;
+  }
+  
+  .hover-bg-light:hover {
+    background-color: #f0f0f0;
+  }
+  
+  
+  .content-wrapper {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+  }
+  
+  .ms-sidebar {
+    margin-left: 260px;
+  }
+  
+  .mt-navbar {
+    margin-top: 80px;
+  }
+  
+
+  .hover-shadow:hover {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+  }
+  
+  .transition {
+    transition: all 0.2s ease-in-out;
+  }
+  
+
+  @media (max-width: 992px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .sidebar.show {
+      transform: translateX(0);
+    }
+    
+    .content-wrapper {
+      margin-left: 0;
+      width: 100%;
+    }
+    
+    .ms-sidebar {
+      margin-left: 0;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .defense-item {
+      flex-direction: column;
+    }
+    
+    .card-body {
+      padding: 1rem;
+    }
+  }
+  
+  </style>
+
+  <body>
+    <div class="d-flex">
+     
+      <div class="sidebar bg-white border-end border-gray-200 vh-100 d-flex flex-column position-fixed">
+        <div class="p-4 border-bottom border-gray-200 d-flex align-items-center">
+          <div class="bg-primary rounded p-1 me-2">
+            <span class="text-white fw-bold fs-5">TFC</span>
+          </div>
+          <h1 class="fs-5 fw-bold text-gray-800"></h1>
         </div>
+        
+        <div class="p-4 border-bottom border-gray-200">
+          <div class="d-flex align-items-center">
+            <img src="" alt="Admin" class="rounded-circle me-3" width="40" height="40">
+            <div>
+              <p>Bem-vindo, {{ current_user.nome }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="overflow-auto flex-grow-1 py-2">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a href="index.html" class="nav-link d-flex align-items-center px-4 py-3 text-dark bg-light border-start border-4 border-primary">
+                <i class="fa-solid fa-chart-bar me-3 text-primary"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="user.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+                <i class="fa-solid fa-users me-3 text-muted"></i>
+                <span>Gestão de Usuários</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="empresa.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+                <i class="fa-solid fa-file-lines me-3 text-muted"></i>
+                <span>Empresa</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="indicador.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+                <i class="fa-solid fa-layer-group me-3 text-muted"></i>
+                <span>Indicador Financeiro</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="relatorio.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+                <i class="fa-solid fa-calendar-days me-3 text-muted"></i>
+                <span>Relatório</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="importardado.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+                <i class="fa-solid fa-file-circle-check me-3 text-muted"></i>
+                <span>Importar Dados</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+                <i class="fa-solid fa-shield me-3 text-muted"></i>
+                <span>Segurança e Auditoria</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+                <i class="fa-solid fa-gear me-3 text-muted"></i>
+                <span>Configurações</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+                <i class="fa-solid fa-circle-question me-3 text-muted"></i>
+                <span>Ajuda</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="p-4 border-top border-gray-200">
+          <button class="btn btn-light text-secondary w-100 d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-right-from-bracket me-2"></i>
+
+            <a href="{{ url_for('logout') }}">Sair</a>
+          </button>
+        </div>
+      </div>
+
+   
+      <div class="content-wrapper">
+       
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-gray-200 fixed-top py-3">
+          <div class="container-fluid ms-sidebar">
+            <button class="btn d-lg-none me-4">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div class="position-relative">
+              <i class="fa-solid fa-search position-absolute start-3 top-50 translate-middle-y text-muted small"></i>
+              <input type="text" placeholder="Pesquisar..." class="form-control ps-4" style="width: 250px;">
+            </div>
+            
+            <div class="d-flex align-items-center">
+              <span class="text-muted me-4" id="current-date"></span>
+              
+              <div class="d-flex me-4">
+                <button class="btn rounded-circle hover-bg-light p-2 mx-1"><i class="fa-solid fa-bell text-muted"></i></button>
+                <button class="btn rounded-circle hover-bg-light p-2 mx-1"><i class="fa-solid fa-circle-question text-muted"></i></button>
+                <button class="btn rounded-circle hover-bg-light p-2 mx-1"><i class="fa-solid fa-gear text-muted"></i></button>
+                <button class="btn rounded-circle hover-bg-light p-2 mx-1"><i class="fa-solid fa-moon text-muted"></i></button>
+              </div>
+
+              <div class="d-flex align-items-center">
+                <img src="img-perfil" alt="Perfil" class="rounded-circle" width="32" height="32">
+                <div class="ms-2 d-none d-md-block">
+                  <p class="small fw-medium text-dark mb-0">ALDAIR MATIAS</p>
+                  <p class="small text-muted mb-0">Administrador</p>
+                </div>
+                <i class="fa-solid fa-chevron-down small text-muted ms-1"></i>
+              </div>
+            </div>
+          </div>
+        </nav>
+        
+        <!-- Main Content Area -->
+        <main class="p-4 mt-navbar">
+          <div class="mb-4">
+            <h1 class="fs-4 fw-bold text-gray-800">Dashboard TFC Manager</h1>
+            <p class="text-muted">
+              Bem-vindo ao painel administrativo do sistema de gestão 
+              de Indicador Financeiro <h2>Bem-vindo, {{ current_user.email }}</h2>
+            </p>
+          </div>
+          
+          <!-- Stats Row -->
+          <div class="row mb-4 g-3">
+            <div class="col-md-6 col-lg-3">
+              <div class="card shadow-sm h-100">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h3 class="text-muted small text-uppercase fw-medium">Total de Estudantes</h3>
+                      <p class="fs-4 fw-bold mt-2">0</p>
+                      <div class="badge bg-success-subtle text-success small">
+                        <i class="fa-solid fa-arrow-up me-1"></i>0%
+                      </div>
+                    </div>
+                    <div class="p-3 rounded bg-primary text-white">
+                      <i class="fa-solid fa-users"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="card shadow-sm h-100">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h3 class="text-muted small text-uppercase fw-medium">Temas Ativos</h3>
+                      <p class="fs-4 fw-bold mt-2">0</p>
+                      <div class="badge bg-success-subtle text-success small">
+                        <i class="fa-solid fa-arrow-up me-1"></i>0%
+                      </div>
+                    </div>
+                    <div class="p-3 rounded bg-success text-white">
+                      <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="card shadow-sm h-100">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h3 class="text-muted small text-uppercase fw-medium">Defesas Agendadas</h3>
+                      <p class="fs-4 fw-bold mt-2">0</p>
+                      <div class="badge bg-success-subtle text-success small">
+                        <i class="fa-solid fa-arrow-up me-1"></i>0%
+                      </div>
+                    </div>
+                    <div class="p-3 rounded bg-warning text-white">
+                      <i class="fa-solid fa-calendar"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="card shadow-sm h-100">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h3 class="text-muted small text-uppercase fw-medium">Média de Notas</h3>
+                      <p class="fs-4 fw-bold mt-2">0</p>
+                      <div class="badge bg-success-subtle text-success small">
+                        <i class="fa-solid fa-arrow-up me-1"></i>0%
+                      </div>
+                    </div>
+                    <div class="p-3 rounded bg-danger text-white">
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Charts Row -->
+          <div class="row mb-4 g-3">
+            <div class="col-lg-8">
+              <div class="card shadow-sm h-100">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                  <h2 class="fs-5 fw-semibold">Estatísticas Mensais</h2>
+                  <div class="btn-group">
+                    <button class="btn btn-sm text-muted">Semana</button>
+                    <button class="btn btn-sm text-primary fw-medium">Mês</button>
+                    <button class="btn btn-sm text-muted">Ano</button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div style="height: 350px;">
+                    <canvas id="monthlyStatsChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="card shadow-sm h-100">
+                <div class="card-header bg-white">
+                  <h2 class="fs-5 fw-semibold">Distribuição por Curso</h2>
+                </div>
+                <div class="card-body">
+                  <div style="height: 250px;">
+                    <canvas id="coursesDistributionChart"></canvas>
+                  </div>
+                  <div class="mt-4 row g-2">
+                    <div class="col-6 d-flex align-items-center">
+                      <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #4169E1;"></div>
+                      <div class="small">
+                        <span class="fw-medium">Eng. Informática: </span>
+                        <span class="text-muted">0</span>
+                      </div>
+                    </div>
+                    <div class="col-6 d-flex align-items-center">
+                      <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #36B37E;"></div>
+                      <div class="small">
+                        <span class="fw-medium">Eng. Telecomunicações: </span>
+                        <span class="text-muted">0</span>
+                      </div>
+                    </div>
+                    <div class="col-6 d-flex align-items-center">
+                      <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #FF5630;"></div>
+                      <div class="small">
+                        <span class="fw-medium">Informática de Gestão: </span>
+                        <span class="text-muted">0</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+         
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html> 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+  </body>
+</html>

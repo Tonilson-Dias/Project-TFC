@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from config import app, db
 from models import Admin
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
