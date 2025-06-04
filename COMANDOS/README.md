@@ -1,17 +1,17 @@
 
-Iniciar o projeto Django
+Iniciar o projeto
 
 python -m venv venv
 . venv/bin/activate
-pip install django
-django-admin startproject project .
-python manage.py startapp contact
+pip install flask
+
 
 Configurar o git
 
 git config --global user.name 'Seu nome'
 git config --global user.email 'seu_email@gmail.com'
 git config --global init.defaultBranch main
+
 # Configure o .gitignore
 git init
 git add .
