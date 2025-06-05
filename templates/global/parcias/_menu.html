@@ -1,86 +1,85 @@
 
-   
-      <div class="sidebar bg-white border-end border-gray-200 vh-100 d-flex flex-column position-fixed">
-        <div class="p-4 border-bottom border-gray-200 d-flex align-items-center">
-          <div class="bg-primary rounded p-1 me-2">
-            <span class="text-white fw-bold fs-5">TFC</span>
-          </div>
-          <h1 class="fs-5 fw-bold text-gray-800"></h1>
-        </div>
-        
-        <div class="p-4 border-bottom border-gray-200">
-          <div class="d-flex align-items-center">
-            <img src="" alt="Admin" class="rounded-circle me-3" width="40" height="40">
-            <div>
-              <p class="fw-medium text-gray-800 mb-0">Aldair Matias</p>
-              <p class="small text-muted mb-0">Administrador</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="overflow-auto flex-grow-1 py-2">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a href="{{ url_for('main.home') }}" class="nav-link d-flex align-items-center px-4 py-3 text-dark bg-light border-start border-4 border-primary">
-                <i class="fa-solid fa-chart-bar me-3 text-primary"></i>
-                <span>Dashboard</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url_for('main.user') }}" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
-                <i class="fa-solid fa-users me-3 text-muted"></i>
-                <span>Gestão de Usuários</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url_for('main.empresa') }}" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
-                <i class="fa-solid fa-file-lines me-3 text-muted"></i>
-                <span>Empresa</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url_for('main.indicador') }}" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
-                <i class="fa-solid fa-layer-group me-3 text-muted"></i>
-                <span>Indicador Financeiro</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url_for('main.relatorio') }}" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
-                <i class="fa-solid fa-calendar-days me-3 text-muted"></i>
-                <span>Relatório</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url_for('main.importardados') }}" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
-                <i class="fa-solid fa-file-circle-check me-3 text-muted"></i>
-                <span>Importar Dados</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
-                <i class="fa-solid fa-shield me-3 text-muted"></i>
-                <span>Segurança e Auditoria</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
-                <i class="fa-solid fa-gear me-3 text-muted"></i>
-                <span>Configurações</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
-                <i class="fa-solid fa-circle-question me-3 text-muted"></i>
-                <span>Ajuda</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="p-4 border-top border-gray-200">
-          <button class="btn btn-light text-secondary w-100 d-flex align-items-center justify-content-center">
-            <i class="fa-solid fa-right-from-bracket me-2"></i>
-            Sair
-          </button>
-        </div>
+<div class="sidebar bg-white border-end border-gray-200 vh-100 d-flex flex-column position-fixed">
+  <div class="p-4 border-bottom border-gray-200 d-flex align-items-center">
+    <div class="bg-primary rounded p-1 me-2">
+      <span class="text-white fw-bold fs-5">TFC</span>
+    </div>
+    <h1 class="fs-5 fw-bold text-gray-800"></h1>
+  </div>
+  
+  <div class="p-4 border-bottom border-gray-200">
+    <div class="d-flex align-items-center">
+      <img src="" alt="Admin" class="rounded-circle me-3" width="40" height="40">
+      <div>
+        <p>Bem-vindo, {{ current_user.nome }}</p>
       </div>
+    </div>
+  </div>
+  
+  <div class="overflow-auto flex-grow-1 py-2">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a href="index.html" class="nav-link d-flex align-items-center px-4 py-3 text-dark bg-light border-start border-4 border-primary">
+          <i class="fa-solid fa-chart-bar me-3 text-primary"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="user.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+          <i class="fa-solid fa-users me-3 text-muted"></i>
+          <span>Gestão de Usuários</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="empresa.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+          <i class="fa-solid fa-file-lines me-3 text-muted"></i>
+          <span>Empresa</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="indicador.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+          <i class="fa-solid fa-layer-group me-3 text-muted"></i>
+          <span>Indicador Financeiro</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="relatorio.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+          <i class="fa-solid fa-calendar-days me-3 text-muted"></i>
+          <span>Relatório</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="importardado.html" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+          <i class="fa-solid fa-file-circle-check me-3 text-muted"></i>
+          <span>Importar Dados</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+          <i class="fa-solid fa-shield me-3 text-muted"></i>
+          <span>Segurança e Auditoria</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+          <i class="fa-solid fa-gear me-3 text-muted"></i>
+          <span>Configurações</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link d-flex align-items-center px-4 py-3 text-secondary">
+          <i class="fa-solid fa-circle-question me-3 text-muted"></i>
+          <span>Ajuda</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="p-4 border-top border-gray-200">
+    <button class="btn btn-light text-secondary w-100 d-flex align-items-center justify-content-center">
+      <i class="fa-solid fa-right-from-bracket me-2"></i>
+
+      <a href="{{ url_for('logout') }}">Sair</a>
+    </button>
+  </div>
+</div>

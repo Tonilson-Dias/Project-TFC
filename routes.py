@@ -30,8 +30,9 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
-
+    admin_bd = db.engine.url.database
+    admins = Admin.query.all()
+    return render_template('dashboard.html', admin_bd=admin_bd, admins=admins)
 # Create a route to add the first admin (you should protect or remove this in production)
 @app.route('/setup', methods=['GET', 'POST'])
 def setup():
@@ -42,7 +43,7 @@ def setup():
         email = request.form.get('email')
         password = request.form.get('password')
         
-        admin = Admin(email=email)
+        admin = Admin(email=email)  # type:ignore
         admin.set_password(password)
         
         db.session.add(admin)

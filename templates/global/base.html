@@ -8,24 +8,6 @@
   </head>
   
   <body>
-    <div class="d-flex">
-     
-      {% include "global/parcias/_menu.html" %}
-
-   
-      <div class="content-wrapper">
-       
-        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-gray-200 fixed-top py-3">
-          {% include "global/parcias/_nav.html" %}
-        </nav>
-        
-        <!-- Main Content Area -->
-        <main class="p-4 mt-navbar">
-            {% block conteudo %}  {% endblock  %}
-        </main>
-      </div>
-    </div>
-
-    {% include "global/parcias/_footer.html" %}
+    {% block conteudo %}{% endblock  %}
   </body>
 </html>
