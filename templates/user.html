@@ -1,10 +1,25 @@
+
 {% extends "global/base.html" %}
 
 {% block conteudo %}
-          <!-- Charts Row -->
-          <div class="row mb-4 g-3">
-           {% include "global/parcias/_conteiner.html" %}
-          </div>
-          
+    <!-- Charts Row -->
+    <div class="row mb-4 g-3">
+     {% include "global/parcias/_conteiner.html" %}
     </div>
+<body class="bg-light">
+
+<main class="container d-flex justify-content-center align-items-start" style="min-height: 80vh; padding-top: 40px;">
+  <div class="card shadow-sm p-4" style="width: 50%;">
+    <h2 class="text-center mb-4">Gestão de Usuários</h2>
+
+    <div class="mb-3 p-3 bg-white shadow-sm rounded">
+      <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg w-100">Criar Usuário</a>
+    </div>
+
+    <div class="p-3 bg-white shadow-sm rounded">
+      <a href="{{ url_for('profile') }}" class="btn btn-success btn-lg w-100">Atualizar Usuário</a>
+    </div>
+  </div>
+</main>
+
 {% endblock  %}

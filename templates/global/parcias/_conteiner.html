@@ -1,54 +1,139 @@
-  <div class="row mb-4 g-3">
-            <div class="col-lg-8">
-              <div class="card shadow-sm h-100">
-                <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                  <h2 class="fs-5 fw-semibold">Estatísticas Mensais</h2>
-                  <div class="btn-group">
-                    <button class="btn btn-sm text-muted">Semana</button>
-                    <button class="btn btn-sm text-primary fw-medium">Mês</button>
-                    <button class="btn btn-sm text-muted">Ano</button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div style="height: 350px;">
-                    <canvas id="monthlyStatsChart"></canvas>
-                  </div>
-                </div>
-              </div>
+  <div class="d-flex">
+      <!-- Sidebar -->
+      <div class="sidebar vh-100 d-flex flex-column position-fixed">
+        <div class="sidebar-header d-flex align-items-center">
+          <div class="bg-white rounded p-2 me-3">
+            <span class="text-primary fw-bold fs-5">SanaAnalit</span>
+          </div>
+          <h1 class="fs-5 fw-bold text-white mb-0">SanaAnalit</h1>
+        </div>
+        
+        <div class="p-3 border-bottom border-gray-200 d-flex align-items-center" style="border-color: rgba(255, 255, 255, 0.1) !important;">
+          <img src="https://via.placeholder.com/40" alt="Admin" class="rounded-circle me-3" width="40" height="40">
+          <div>
+            <p class="mb-0 text-white">Bem-vindo, {{ current_user.nome }}</p>
+            <small class="text-white-50">Administrador</small>
+          </div>
+        </div>
+        
+        <div class="overflow-auto flex-grow-1 py-2">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a href="{{ url_for('dashboard') }}" class="nav-link active">
+                <i class="fa-solid fa-chart-bar"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('user') }}" class="nav-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Gestão de Usuários</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('empresa') }}" class="nav-link">
+                <i class="fa-solid fa-file-lines"></i>
+                <span>Empresa</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('indicador') }}" class="nav-link">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Indicador Financeiro</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('relatorio') }}" class="nav-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Relatório</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('importardados') }}" class="nav-link">
+                <i class="fa-solid fa-file-circle-check"></i>
+                <span>Importar Dados</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-shield"></i>
+                <span>Segurança e Auditoria</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-gear"></i>
+                <span>Configurações</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-circle-question"></i>
+                <span>Ajuda</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+          <a href="{{ url_for('logout') }}" class="btn btn-outline-light w-100 d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-right-from-bracket me-2"></i>
+            <span>Sair</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-2">
+          <div class="container-fluid ms-sidebar">
+            <button class="btn d-lg-none me-4 text-white">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div class="position-relative ms-auto me-auto ms-lg-0 me-lg-0">
+              <i class="fa-solid fa-search position-absolute start-3 top-50 translate-middle-y text-white small"></i>
+              <input type="text" placeholder="Pesquisar..." class="form-control ps-4 bg-transparent text-white" style="width: 250px; border-color: rgba(255, 255, 255, 0.3);">
             </div>
-            <div class="col-lg-4">
-              <div class="card shadow-sm h-100">
-                <div class="card-header bg-white">
-                  <h2 class="fs-5 fw-semibold">Distribuição por Curso</h2>
+            
+            <div class="d-flex align-items-center ms-auto">
+              <span class="text-white-50 me-4 d-none d-lg-block" id="current-date"></span>
+              
+              <div class="d-flex me-4">
+                <button class="btn rounded-circle hover-bg-light p-2 mx-1 text-white"><i class="fa-solid fa-bell"></i></button>
+                <button class="btn rounded-circle hover-bg-light p-2 mx-1 text-white"><i class="fa-solid fa-circle-question"></i></button>
+                <button class="btn rounded-circle hover-bg-light p-2 mx-1 text-white"><i class="fa-solid fa-gear"></i></button>
+                <button class="btn rounded-circle hover-bg-light p-2 mx-1 text-white"><i class="fa-solid fa-moon"></i></button>
+              </div>
+
+              <div class="d-flex align-items-center dropdown">
+                <img src="https://via.placeholder.com/32" alt="Perfil" class="rounded-circle" width="32" height="32">
+                <div class="ms-2 d-none d-md-block">
+                  <p class="small fw-medium text-white mb-0">{{ current_user.nome }}</p>
+                  <p class="small text-white-50 mb-0">Administrador</p>
                 </div>
-                <div class="card-body">
-                  <div style="height: 250px;">
-                    <canvas id="coursesDistributionChart"></canvas>
-                  </div>
-                  <div class="mt-4 row g-2">
-                    <div class="col-6 d-flex align-items-center">
-                      <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #4169E1;"></div>
-                      <div class="small">
-                        <span class="fw-medium">Eng. Informática: </span>
-                        <span class="text-muted">0</span>
-                      </div>
-                    </div>
-                    <div class="col-6 d-flex align-items-center">
-                      <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #36B37E;"></div>
-                      <div class="small">
-                        <span class="fw-medium">Eng. Telecomunicações: </span>
-                        <span class="text-muted">0</span>
-                      </div>
-                    </div>
-                    <div class="col-6 d-flex align-items-center">
-                      <div class="rounded-circle me-2" style="width: 12px; height: 12px; background-color: #FF5630;"></div>
-                      <div class="small">
-                        <span class="fw-medium">Informática de Gestão: </span>
-                        <span class="text-muted">0</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <i class="fa-solid fa-chevron-down small text-white ms-1"></i>
               </div>
             </div>
           </div>
+        </nav>
+        
+        <!-- Main Content Area -->
+        <main class="p-4 mt-navbar">
+          <div class="mb-4">
+            <h1 class="fs-4 fw-bold text-gray-800">SanaAnalit</h1>
+            <p class="text-muted">
+              Bem-vindo ao painel administrativo do sistema de gestão 
+              de Indicador Financeiro <h2>Bem-vindo, {{ current_user.nome }}</h2>
+            </p>
+          </div>
+          
+          <!-- Stats Row -->
+         
+          
+          <!-- Charts Row -->
+          
+        </main>
+      </div>
+    </div>

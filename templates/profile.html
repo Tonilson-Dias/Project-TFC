@@ -1,6 +1,11 @@
 {% extends "global/base.html" %}
 
 {% block conteudo %}
+
+   <div class="row mb-4 g-3">
+           {% include "global/parcias/_conteiner.html" %}
+  </div>
+
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -98,7 +103,7 @@
                                 <div class="d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary">Atualizar Perfil</button>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
-                                        Excluir Conta
+                                        Excluir Usuário
                                     </button>
                                 </div>
                             </form>

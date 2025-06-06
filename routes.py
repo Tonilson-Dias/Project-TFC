@@ -143,6 +143,32 @@ def profile():
     return render_template('profile.html')
 
 
+@app.route('/user')
+@login_required
+def user():
+    return render_template('user.html')
+
+@app.route('/empresa')
+@login_required
+def empresa():
+    return render_template('empresa.html')
+
+@app.route('/indicador')
+@login_required
+def indicador():
+    return render_template('indicador.html')
+
+
+@app.route('/importardados')
+@login_required
+def relatorio():
+    return render_template('relatorio.html')
+
+@app.route('/importardados')
+@login_required
+def importardados():
+    return render_template('importardados.html')
+
 @app.route('/atualizar_perfil', methods=['POST'])
 @login_required
 def atualizar_perfil():
@@ -247,3 +273,48 @@ def excluir_conta():
         app.logger.error(f"Erro ao excluir conta: {e}")
         flash('Erro ao excluir conta. Por favor, tente novamente.', 'danger')
         return redirect(url_for('profile'))
+
+@app.route('/atualizar_usuario/<int:user_id>', methods=['POST'])
+@login_required
+def atualizar_usuario(user_id):
+    admin = Admin.query.get_or_404(user_id)
+    
+    # Verificar se o usuário tem permissão para editar
+    if not current_user.is_authenticated:
+        flash('Você não tem permissão para editar usuários.', 'danger')
+        return redirect(url_for('user'))
+    
+    nome = request.form.get('nome', '').strip()
+    email = request.form.get('email', '').strip()
+    telefone = request.form.get('telefone', '').strip()
+    cargo = request.form.get('cargo', '').strip()
+    nova_senha = request.form.get('nova_senha', '')
+    ativo = request.form.get('ativo') == '1'
+    
+    if not all([nome, email, cargo]):
+        flash('Todos os campos obrigatórios devem ser preenchidos', 'danger')
+        return redirect(url_for('user'))
+    
+    # Verificar se o email já está em uso por outro usuário
+    email_exists = Admin.query.filter(Admin.email == email, Admin.id != user_id).first()
+    if email_exists:
+        flash('Email já está em uso por outro usuário', 'danger')
+        return redirect(url_for('user'))
+    
+    try:
+        admin.nome = nome
+        admin.email = email
+        admin.telefone = telefone
+        admin.cargo = cargo
+        admin.ativo = ativo
+        
+        if nova_senha:
+            admin.set_password(nova_senha)
+        
+        db.session.commit()
+        flash('Usuário atualizado com sucesso!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Erro ao atualizar usuário: {str(e)}', 'danger')
+    
+    return redirect(url_for('user'))
