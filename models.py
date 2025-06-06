@@ -17,6 +17,7 @@ class Admin(db.Model, UserMixin):
     data_cadastro = db.Column(db.DateTime, default=datetime.utcnow)
     ativo = db.Column(db.Boolean, default=True)
     ultimo_acesso = db.Column(db.DateTime)
+    foto_perfil = db.Column(db.String(255))  # Caminho para a foto de perfil
 
     def set_password(self, password):
         salt = bcrypt.gensalt()
@@ -36,5 +37,6 @@ class Admin(db.Model, UserMixin):
             'cargo': self.cargo,
             'data_cadastro': self.data_cadastro.isoformat() if self.data_cadastro else None,
             'ativo': self.ativo,
-            'ultimo_acesso': self.ultimo_acesso.isoformat() if self.ultimo_acesso else None
+            'ultimo_acesso': self.ultimo_acesso.isoformat() if self.ultimo_acesso else None,
+            'foto_perfil': self.foto_perfil
         }
