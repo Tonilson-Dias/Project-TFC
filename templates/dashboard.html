@@ -14,7 +14,21 @@
         </div>
         
         <div class="p-3 border-bottom border-gray-200 d-flex align-items-center" style="border-color: rgba(255, 255, 255, 0.1) !important;">
-          <img src="https://via.placeholder.com/40" alt="Admin" class="rounded-circle me-3" width="40" height="40">
+          {% if current_user.foto_perfil %}
+            <img src="{{ url_for('static', filename=current_user.foto_perfil) }}" 
+                 alt="Admin" 
+                 class="rounded-circle me-3" 
+                 width="40" 
+                 height="40"
+                 style="object-fit: cover;">
+          {% else %}
+            <img src="{{ url_for('static', filename='img/default-profile.png') }}" 
+                 alt="Admin" 
+                 class="rounded-circle me-3" 
+                 width="40" 
+                 height="40"
+                 style="object-fit: cover;">
+          {% endif %}
           <div>
             <p class="mb-0 text-white">Bem-vindo, {{ current_user.nome }}</p>
             <small class="text-white-50">Administrador</small>
@@ -92,6 +106,16 @@
       <div class="content-wrapper">
         <!-- Top Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-2">
+            <div class="d-flex align-items-center justify-content-center ms-auto me-3">
+                <div class="rounded-circle overflow-hidden border border-secondary shadow-sm"
+                     style="width: 48px; height: 48px; background-color: rgba(255, 255, 255, 0.05);">
+                  <img src="{{ url_for('static', filename='img/login.jpg') }}" 
+                       alt="Logo SanaAnalit" 
+                       class="w-100 h-100" 
+                       style="object-fit: cover; filter: brightness(0.9);">
+                </div>
+            </div>
+
           <div class="container-fluid ms-sidebar">
             <button class="btn d-lg-none me-4 text-white">
               <i class="fa-solid fa-bars"></i>
@@ -113,7 +137,21 @@
               </div>
 
               <div class="d-flex align-items-center dropdown">
-                <img src="https://via.placeholder.com/32" alt="Perfil" class="rounded-circle" width="32" height="32">
+                {% if current_user.foto_perfil %}
+                  <img src="{{ url_for('static', filename=current_user.foto_perfil) }}" 
+                       alt="Perfil" 
+                       class="rounded-circle" 
+                       width="32" 
+                       height="32"
+                       style="object-fit: cover;">
+                {% else %}
+                  <img src="{{ url_for('static', filename='img/default-profile.png') }}" 
+                       alt="Perfil" 
+                       class="rounded-circle" 
+                       width="32" 
+                       height="32"
+                       style="object-fit: cover;">
+                {% endif %}
                 <div class="ms-2 d-none d-md-block">
                   <p class="small fw-medium text-white mb-0">{{ current_user.nome }}</p>
                   <p class="small text-white-50 mb-0">Administrador</p>

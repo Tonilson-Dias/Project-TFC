@@ -1,25 +1,92 @@
-
 {% extends "global/base.html" %}
 
 {% block conteudo %}
-    <!-- Charts Row -->
-    <div class="row mb-4 g-3">
-     {% include "global/parcias/_conteiner.html" %}
-    </div>
-<body class="bg-light">
-
-<main class="container d-flex justify-content-center align-items-start" style="min-height: 80vh; padding-top: 40px;">
-  <div class="card shadow-sm p-4" style="width: 50%;">
-    <h2 class="text-center mb-4">Gestão de Usuários</h2>
-
-    <div class="mb-3 p-3 bg-white shadow-sm rounded">
-      <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg w-100">Criar Usuário</a>
-    </div>
-
-    <div class="p-3 bg-white shadow-sm rounded">
-      <a href="{{ url_for('profile') }}" class="btn btn-success btn-lg w-100">Atualizar Usuário</a>
-    </div>
+  <!-- Charts Row -->
+  <div class="row mb-4 g-3">
+    {% include "global/parcias/_conteiner.html" %}
   </div>
-</main>
 
-{% endblock  %}
+  <body class="bg-light">
+    <main class="container d-flex justify-content-center align-items-start" style="min-height: 80vh; padding-top: 40px;">
+      <div class="card shadow-sm p-4 w-100" style="max-width: 1000px;">
+        <h2 class="text-center mb-4">Gestão de Usuários</h2>
+
+        <!-- Botões lado a lado -->
+        <div class="mb-4 d-flex justify-content-between">
+          <a href="{{ url_for('register') }}" class="btn btn-primary btn-sm px-4">
+            <i class="bi bi-person-plus"></i> Criar Usuário
+          </a>
+        </div>
+
+        <!-- Tabela de usuários -->
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle text-center">
+            <caption class="caption-top fw-bold text-primary">
+              Lista de Usuários Cadastrados
+            </caption>
+
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Cargo</th>
+                <th scope="col">Status</th>
+                <th scope="col">Atualizar</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for user in users %}
+              <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.nome }}</td>
+                <td>{{ user.telefone or '-' }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.cargo or '-' }}</td>
+                <td>
+                  {% if user.ativo %}
+                    <span class="badge bg-success">Ativo</span>
+                  {% else %}
+                    <span class="badge bg-danger">Inativo</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <div class="btn-group" role="group">
+                    <a href=" {{ url_for('profile') }}" class="btn btn-warning btn-sm" title="Atualizar">
+                      <i class="bi bi-pencil-square">Atualizar</i>
+                    </a>
+                  </div>
+
+                  <!-- Modal de confirmação de exclusão -->
+                  <div class="modal fade" id="deleteModal{{ user.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ user.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel{{ user.id }}">Confirmar Exclusão</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          Tem certeza que deseja excluir o usuário <strong>{{ user.nome }}</strong>?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <a href="{{ url_for('excluir_conta', user_id=user.id) }}" class="btn btn-danger">Confirmar Exclusão</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="7" class="text-muted">Nenhum usuário encontrado.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+{% endblock %}

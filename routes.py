@@ -146,7 +146,8 @@ def profile():
 @app.route('/user')
 @login_required
 def user():
-    return render_template('user.html')
+    users = Admin.query.all()
+    return render_template('user.html', users=users)
 
 @app.route('/empresa')
 @login_required
