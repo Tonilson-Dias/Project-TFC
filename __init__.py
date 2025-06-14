@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from config import config
+from api.empresa_api import empresa_api
 
 db = SQLAlchemy()
 migrate = Migrate()

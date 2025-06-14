@@ -1,10 +1,103 @@
-{% extends "global/base.html" %}
 
-{% block conteudo %}
-          <!-- Charts Row -->
-          <div class="row mb-4 g-3">
-           {% include "global/parcias/_conteiner.html" %}
-          </div>
-          
-    
-{% endblock  %}
+
+<!-- Gráficos de Vendas -->
+<div class="row mb-4 g-3">
+  <div class="col-lg-8">
+    <div class="card h-100">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h2 class="fs-5 fw-semibold">Estatísticas de Vendas</h2>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-outline-secondary" onclick="updateChart('week')">Semana</button>
+          <button class="btn btn-sm btn-primary" onclick="updateChart('month')">Mês</button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="updateChart('year')">Ano</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <canvas id="vendasChart" style="height: 300px;"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-lg-4">
+    <div class="card h-100">
+      <div class="card-header bg-white">
+        <h2 class="fs-5 fw-semibold">Distribuição por Produto</h2>
+      </div>
+      <div class="card-body">
+        <canvas id="produtosChart" style="height: 250px;"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Função para carregar dados da API
+async function loadVendasData() {
+  const response = await fetch('/api/vendas');
+  const data = await response.json();
+  return data;
+}
+
+// Inicializar gráficos
+async function initCharts() {
+  const vendas = await loadVendasData();
+  
+  // Gráfico de Vendas
+  const ctx1 = document.getElementById('vendasChart').getContext('2d');
+  const vendasChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: vendas.map(v => v.data),
+      datasets: [{
+        label: 'Valor das Vendas',
+        data: vendas.map(v => v.valor),
+        borderColor: '#0d6efd',
+        tension: 0.1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+
+  // Gráfico de Produtos
+  const produtos = {};
+  vendas.forEach(v => {
+    produtos[v.produto] = (produtos[v.produto] || 0) + v.quantidade;
+  });
+
+  const ctx2 = document.getElementById('produtosChart').getContext('2d');
+  const produtosChart = new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(produtos),
+      datasets: [{
+        data: Object.values(produtos),
+        backgroundColor: [
+          '#0d6efd',
+          '#198754',
+          '#ffc107',
+          '#dc3545'
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+// Função para atualizar período do gráfico
+function updateChart(period) {
+  // Implementar lógica de filtro por período
+  console.log('Atualizando para período:', period);
+}
+
+// Inicializar gráficos quando a página carregar
+document.addEventListener('DOMContentLoaded', initCharts);
+</script>
+
+
